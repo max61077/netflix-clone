@@ -40,7 +40,7 @@ const Navbar = () => {
                 duration-900
                 ${showBackground ? 'bg-zinc-900 bg-opacity-90' : ''}
             `} >
-                <img className='h-4 lg:h-7' src='/images/logo.png' />
+                <img className='h-4 lg:h-7' src='/images/logo.png' alt='logo' />
                 <div className='
                     flex-row
                     ml-8
@@ -70,7 +70,7 @@ const Navbar = () => {
                         <BsBell />
                     </div>
                     <div onClick={() => setShowAccountMenu(!showAccountMenu)} className='flex flex-row items-center gap-2 cursor-pointer relative' >
-                        <div className='w-6 h-6 lg:h-10 rounded-md overflow-hidden'>
+                        <div className='w-6 h-6 lg:w-8 lg:h-8 rounded-md overflow-hidden'>
                             <img src='/images/default-red.png' alt='profile' />
                         </div>
                         <BsChevronDown className={`text-white mt-1 transition ${showAccountMenu ? 'rotate-180' : 'rotate-0'}`} />
