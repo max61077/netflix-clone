@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         if (req.method === 'POST') {
-            const userAuth = await serverAuth(req)
+            const { currentUser } = await serverAuth(req)
             
             const { movieId } = req.body
 
@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             const user = await prismadb.user.update({
                 where: {
-                    email: userAuth?.currentUser.email || ''
+                    email: currentUser.email || ''
                 },
                 data: {
                     favouriteIds: {
@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         if (req.method === 'DELETE') {
-            const userAuth = await serverAuth(req)
+            const { currentUser } = await serverAuth(req)
             const { movieId } = req.body
 
             const existingMovie = await prismadb.movie.findUnique({
@@ -44,11 +44,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 throw new Error('Movie Id doesnot exists')
             }
 
-            const updatedFavoriteIds = userAuth?.currentUser.favouriteIds.filter(movId => movId !== existingMovie.id)
+            const updatedFavoriteIds = currentUser.favouriteIds.filter(movId => movId !== existingMovie.id)
 
             const user = await prismadb.user.update({
                 where: {
-                    email: userAuth?.currentUser.email || ''
+                    email: currentUser.email || ''
                 },
                 data: {
                     favouriteIds: updatedFavoriteIds
